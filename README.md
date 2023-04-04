@@ -24,7 +24,8 @@ Note: the typescript import cause a troobleshooting when google transform files 
 
 ``` bash
 # Create a new version
-<$ clasp version <new-version>
+# the version should be automaticly create by clasp with the description version provided
+<$ clasp version <description-version>
 
 # You could checks the version exist
 <$ clasp versions
@@ -33,8 +34,9 @@ Note: the typescript import cause a troobleshooting when google transform files 
 2 - (no description)
 ```
 
-``` bash deploy  new version
-<$ clasp deploy <version> <description>
+``` bash
+# deploy will create a new version with the descriptions provided
+<$ clasp deploy <version-description> <deploy-description>
 ```
 
 ## Contributing
