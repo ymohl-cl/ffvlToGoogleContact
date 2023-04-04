@@ -34,8 +34,9 @@ export function getPeoples(): Array<GoogleAppsScript.People.Schema.Person> {
 }
 
 function listPeopleApi(params: ConnectionParameters): GoogleAppsScript.People.Schema.ListConnectionsResponse | undefined {
+	Utilities.sleep(1000)
 	try {
-		return People.People?.Connections?.list('people/me', params);
+		return People.People!.Connections!.list('people/me', params);
 	} catch (err) {
 		console.log('Failed to get the connection with an error %s', err);
 	}
@@ -48,7 +49,8 @@ export function updateContact(contact: GoogleAppsScript.People.Schema.Person): G
 	if (contact.resourceName === undefined) {
 		throw new Error("invalid contact for update with an empty resourceName")
 	}
-	const updatedContact = People.People?.updateContact(contact, contact.resourceName, params)
+	Utilities.sleep(1000)
+	const updatedContact = People.People!.updateContact(contact, contact.resourceName, params)
 	if (updatedContact === undefined) {
 		throw new Error("contact updater has failed. contact informations: " + contact)
 	}
@@ -61,7 +63,8 @@ export function createContact(contact: GoogleAppsScript.People.Schema.Person): G
 	const params: CreateParameters = {
 		personFields: "names,emailAddresses,biographies"
 	}
-	const newContact = People.People?.createContact(contact, params)
+	Utilities.sleep(1000)
+	const newContact = People.People!.createContact(contact, params)
 	if (newContact === undefined) {
 		throw new Error("contact creator has failed. contact informations: " + contact)
 	}

@@ -10,6 +10,7 @@ The format is HTML
 ## SRC
 
 Source files to excute the script. `0_code.ts` contains the main script `run`
+Because they are a limitation usage of Google ressources, each call are a sleeper time of 1000.
 
 ## Usage
 

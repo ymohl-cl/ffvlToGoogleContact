@@ -41,19 +41,20 @@ function run(): void {
 	}
 }
 
-function recordContacts(gmailPeoples: Array<GoogleAppsScript.People.Schema.Person>,
-		contacts: Array<Member>): void {
+function recordContacts(gmailPeoples: Array<GoogleAppsScript.People.Schema.Person>, contacts: Array<Member>): void {
+	const groupName = contacts[0].licenceYear+suffixLabelContactGroup
+	const contactGroup: GoogleAppsScript.People.Schema.ContactGroup = provideContactGroup(groupName)
+	const peoplesList: Array<GoogleAppsScript.People.Schema.Person> = []
 
 	for (var i = 0; i < contacts.length; i++) {
-		recordContact(gmailPeoples, contacts[i])
-		sendWelkomeEmail(contacts[i])
+		var contact = contacts[i]
+		peoplesList.push(recordContact(gmailPeoples, contact))
+		sendWelkomeEmail(contact)
 	}
+	addMembersToContactGroup(contactGroup, peoplesList)
 }
 
-function recordContact(gmailPeoples: Array<GoogleAppsScript.People.Schema.Person>, contact: Member): void {
-	const groupName = contact.licenceYear+suffixLabelContactGroup
-	const contactGroup: GoogleAppsScript.People.Schema.ContactGroup = provideContactGroup(groupName)
-
+function recordContact(gmailPeoples: Array<GoogleAppsScript.People.Schema.Person>, contact: Member): GoogleAppsScript.People.Schema.Person {
 	var finderPeople: GoogleAppsScript.People.Schema.Person | undefined = gmailPeoples.find((p: GoogleAppsScript.People.Schema.Person) => (p.emailAddresses && p.emailAddresses[0].value === contact.mail));
 	var gmailPeople = memberToPeople(contact, finderPeople)
 	if (finderPeople === undefined) {
@@ -61,7 +62,8 @@ function recordContact(gmailPeoples: Array<GoogleAppsScript.People.Schema.Person
 	} else {
 		gmailPeople = updateContact(gmailPeople)
 	}
-	addMemberToContactGroup(contactGroup, gmailPeople)
+
+	return gmailPeople
 }
 
 // member to people copy the member data to the people data from google people api
