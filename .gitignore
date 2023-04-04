@@ -1,0 +1,8 @@
+# project
+node_modules/**
+**/dist/**
+**/examples/**
+
+# Clasp
+/.clasprc.json
+
